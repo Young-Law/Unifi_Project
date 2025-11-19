@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="UniFi Dashboard">
+  <link rel="apple-touch-icon" href="/static/icon.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UniFi Internet Access Control</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Toggle switch styling */
+    .toggle-bg {
+      position: relative;
+      width: 60px;
+      height: 32px;
+      background-color: #d1d5db; /* gray-300 */
+      border-radius: 9999px;
+      transition: background-color 0.3s ease-in-out;
+      flex-shrink: 0;
+    }
+
+    input:checked + .toggle-bg {
+      background-color: #22c55e; /* green-500 */
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      height: 24px;
+      width: 24px;
+      background-color: white;
+      border-radius: 9999px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    input:checked + .toggle-bg .toggle-slider {
+      transform: translateX(28px);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow p-6 text-center">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">UniFi Internet Access Dashboard</h1>
+    <p class="text-gray-500 mt-1 text-sm sm:text-base">Monitor and manage UniFi traffic rules with ease</p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white rounded-2xl shadow p-6 text-center hover:shadow-lg transition">
+        <h2 class="text-base sm:text-lg font-semibold text-gray-700">Total Rules</h2>
+        <p class="text-3xl sm:text-4xl font-bold text-blue-600 mt-2">{{ traffic_rules | length }}</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow p-6 text-center hover:shadow-lg transition">
+        <h2 class="text-base sm:text-lg font-semibold text-gray-700">Allowed</h2>
+        <p class="text-3xl sm:text-4xl font-bold text-green-600 mt-2">
+          {{ traffic_rules | selectattr('action', 'equalto', 'ALLOW') | list | length }}
+        </p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow p-6 text-center hover:shadow-lg transition">
+        <h2 class="text-base sm:text-lg font-semibold text-gray-700">Blocked</h2>
+        <p class="text-3xl sm:text-4xl font-bold text-red-600 mt-2">
+          {{ traffic_rules | selectattr('action', 'equalto', 'BLOCK') | list | length }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Responsive Table -->
+    <div class="bg-white shadow-xl rounded-2xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full border-collapse text-left text-sm sm:text-base">
+          <thead class="bg-gray-50 border-b">
+            <tr>
+              <th class="px-4 sm:px-6 py-4 font-semibold text-gray-600 uppercase">Rule Name</th>
+              <th class="px-4 sm:px-6 py-4 font-semibold text-gray-600 uppercase">Devices</th>
+              <th class="px-4 sm:px-6 py-4 font-semibold text-gray-600 uppercase">Status</th>
+              <th class="px-4 sm:px-6 py-4 font-semibold text-gray-600 uppercase text-center">Action</th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-gray-200">
+            {% for rule in traffic_rules %}
+            <tr class="hover:bg-gray-50 transition">
+              <!-- Rule name -->
+              <td class="px-4 sm:px-6 py-4 whitespace-nowrap">
+                <a href="/rule/{{ rule['_id'] }}" class="text-blue-600 font-semibold hover:underline">
+                  {{ rule['description'] }}
+                </a>
+              </td>
+
+              <!-- Devices -->
+              <td class="px-4 sm:px-6 py-4 text-gray-700">
+                {{ rule['target_devices'] | length }}
+              </td>
+
+              <!-- Status -->
+              <td class="px-4 sm:px-6 py-4">
+                {% if rule['action'] == 'ALLOW' %}
+                  <span class="text-green-600 font-semibold">Internet ON</span>
+                {% else %}
+                  <span class="text-red-600 font-semibold">Internet OFF</span>
+                {% endif %}
+              </td>
+
+              <!-- Toggle switch -->
+              <td class="px-4 sm:px-6 py-4 text-center">
+                <label class="inline-flex items-center cursor-pointer justify-center relative">
+                  <input 
+                    type="checkbox"
+                    class="sr-only toggle-switch"
+                    data-id="{{ rule['_id'] }}"
+                    {% if rule['action'] == 'ALLOW' %}checked{% endif %}
+                  >
+                  <div class="toggle-bg">
+                    <span class="toggle-slider"></span>
+                  </div>
+
+                  <!-- Spinner -->
+                  <svg class="loader hidden absolute w-5 h-5 text-gray-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                  </svg>
+                </label>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-400 py-4 text-sm border-t bg-white">
+    UniFi Internet Controller Panel
+  </footer>
+
+  <!-- JS -->
+  <script>
+    async function toggleRule(ruleId, checkbox, loader) {
+      loader.classList.remove('hidden');   // Show spinner
+      checkbox.disabled = true;
+
+      try {
+        const res = await fetch(`/api/firewall/toggle_rule/${ruleId}`, { method: "POST" });
+        if (!res.ok) {
+          alert("Failed to update rule");
+          checkbox.checked = !checkbox.checked; // revert toggle
+        }
+      } catch (err) {
+        alert("Network error");
+        checkbox.checked = !checkbox.checked; // revert toggle
+      } finally {
+        loader.classList.add('hidden');  // Hide spinner
+        checkbox.disabled = false;
+      }
+    }
+
+    document.querySelectorAll(".toggle-switch").forEach(toggle => {
+      toggle.addEventListener("change", async e => {
+        const checkbox = e.target;
+        const id = checkbox.dataset.id;
+        const loader = checkbox.closest('label').querySelector('.loader');
+        await toggleRule(id, checkbox, loader);
+        location.reload(); // refresh to show updated status
+      });
+    });
+  </script>
+</body>
+</html>

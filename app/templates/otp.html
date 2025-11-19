@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniFi OTP Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-white">
+
+    <div class="bg-white shadow-2xl border border-gray-200 rounded-2xl p-10 w-full max-w-md">
+
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6 tracking-wide">
+            UniFi OTP Verification
+        </h2>
+
+        <p class="text-center text-gray-600 mb-6">
+            A verification code has been sent to your email.
+        </p>
+
+        <form id="otpForm" method="POST" action="/auth/login-complete" class="space-y-6">
+
+            <!-- Hidden fields -->
+            <input type="hidden" name="username" value="{{ username }}">
+            <input type="hidden" name="password" value="{{ password }}">
+            <input type="hidden" name="remember_me" value="{{ remember_me }}">
+            <input type="hidden" name="mfa_cookie" value="{{ mfa_cookie }}">
+            <input type="hidden" name="cookiejar_b64" value="{{ cookiejar_b64 }}">
+
+            <!-- OTP input -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Enter OTP</label>
+                <input type="text" name="token" required
+                    class="w-full px-4 py-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm"
+                    placeholder="6-digit code">
+            </div>
+
+            <!-- Error message -->
+            {% if error %}
+            <div class="text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-center font-medium">
+                {{ error.body.message if error.body and error.body.message else "Invalid OTP" }}
+            </div>
+            {% endif %}
+
+            <!-- Verify button with spinner -->
+            <button id="verifyBtn" type="submit"
+                class="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold text-lg shadow-md hover:bg-blue-700 transition duration-300 flex items-center justify-center gap-2">
+                <span id="verifyText">Verify & Login</span>
+
+                <!-- Hidden spinner -->
+                <svg id="verifySpinner" class="hidden animate-spin h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-30" cx="12" cy="12" r="10"
+                        stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-80" fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+                    </path>
+                </svg>
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- Spinner Script (safe form submit) -->
+    <script>
+        document.getElementById("otpForm").addEventListener("submit", function () {
+
+            const btn = document.getElementById("verifyBtn");
+            const text = document.getElementById("verifyText");
+            const spinner = document.getElementById("verifySpinner");
+
+            text.classList.add("hidden");
+            spinner.classList.remove("hidden");
+
+            btn.disabled = true;
+            btn.classList.add("opacity-70", "cursor-not-allowed");
+        });
+    </script>
+
+</body>
+
+</html>

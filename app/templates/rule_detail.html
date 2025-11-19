@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rule Detail - {{ rule.description }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Toggle styling (same as index) */
+    .toggle-bg {
+      position: relative;
+      width: 60px;
+      height: 32px;
+      background-color: #d1d5db;
+      border-radius: 9999px;
+      transition: background-color 0.3s ease-in-out;
+      flex-shrink: 0;
+    }
+
+    input:checked + .toggle-bg {
+      background-color: #22c55e; /* green-500 */
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      height: 24px;
+      width: 24px;
+      background-color: white;
+      border-radius: 9999px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    input:checked + .toggle-bg .toggle-slider {
+      transform: translateX(28px);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow p-6 text-center">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">Rule Details</h1>
+    <p class="text-gray-500 mt-1 text-sm sm:text-base">View and manage device access for this rule</p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
+    <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-5xl mx-auto border-t-4 {{ 'border-green-500' if rule.action == 'ALLOW' else 'border-red-500' }}">
+      
+      <!-- Rule Info -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+        <div class="space-y-1">
+          <h2 class="text-xl sm:text-2xl font-semibold text-gray-800">{{ rule.description }}</h2>
+          <p class="text-gray-500 text-sm">Target: {{ rule.matching_target }}</p>
+        </div>
+
+        <!-- Toggle with Spinner -->
+        <div class="flex items-center gap-3 mt-4 sm:mt-0 relative">
+          <span class="font-medium text-sm sm:text-base {{ 'text-green-600' if rule.action == 'ALLOW' else 'text-red-600' }}">
+            {{ 'Internet ON' if rule.action == 'ALLOW' else 'Internet OFF' }}
+          </span>
+          <label class="inline-flex items-center cursor-pointer relative">
+            <input 
+              type="checkbox"
+              class="sr-only toggle-switch"
+              data-id="{{ rule['_id'] }}"
+              {% if rule['action'] == 'ALLOW' %}checked{% endif %}
+            >
+            <div class="toggle-bg">
+              <span class="toggle-slider"></span>
+            </div>
+
+            <!-- Spinner centered inside toggle -->
+            <svg class="loader hidden absolute inset-0 m-auto w-5 h-5 text-gray-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+          </label>
+        </div>
+      </div>
+
+      <hr class="mb-8">
+
+      <!-- Connected Devices -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-700 mb-4">Connected Devices</h3>
+        {% if rule.target_devices %}
+        <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {% for device in rule.target_devices %}
+          <li class="flex items-center justify-between bg-gray-50 hover:bg-gray-100 transition rounded-xl p-4 shadow-sm">
+            <div class="flex items-center gap-3">
+              <i data-lucide="monitor" class="h-5 w-5 text-gray-500"></i>
+              <span class="font-medium text-gray-700 text-sm sm:text-base">
+                {% if device is mapping %}
+                  {{ device.name if device.name else device.client_mac if device.client_mac else 'Unnamed Device' }}
+                {% else %}
+                  {{ device }}
+                {% endif %}
+              </span>
+            </div>
+            {% if device.ip %}
+            <span class="text-xs text-gray-400 ml-2">{{ device.ip }}</span>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-sm text-gray-500 italic">No devices linked to this rule.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-8 text-center">
+      <a href="/" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium">
+        <i data-lucide="arrow-left" class="h-4 w-4"></i> Back to Dashboard
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-400 py-4 text-sm border-t bg-white">
+    UniFi Internet Controller Panel
+  </footer>
+
+  <!-- JS -->
+  <script>
+    lucide.createIcons();
+
+    async function toggleRuleRequest(ruleId, checkbox) {
+      const loader = checkbox.parentElement.querySelector(".loader");
+      loader.classList.remove("hidden"); // show spinner
+      checkbox.disabled = true;          // disable toggle while processing
+
+      try {
+        const res = await fetch(`/api/firewall/toggle_rule/${ruleId}`, { method: "POST" });
+        if (!res.ok) {
+          alert("Failed to update rule");
+          checkbox.checked = !checkbox.checked; // revert toggle
+        }
+        location.reload();
+      } catch (err) {
+        alert("Network error");
+        checkbox.checked = !checkbox.checked; // revert toggle
+      } finally {
+        loader.classList.add("hidden");  // hide spinner
+        checkbox.disabled = false;       // enable toggle
+      }
+    }
+
+    document.querySelectorAll(".toggle-switch").forEach(input => {
+      input.addEventListener("change", e => {
+        const id = e.target.dataset.id;
+        toggleRuleRequest(id, e.target);
+      });
+    });
+  </script>
+</body>
+</html>
