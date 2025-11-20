@@ -2,4 +2,7 @@ fastapi
 uvicorn
 httpx
 jinja2
-dotenv
+python-dotenv
+sqlalchemy
+requests
+python-multipart
