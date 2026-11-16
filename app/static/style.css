@@ -1,0 +1,32 @@
+/* app/static/style.css */
+
+/* Toggle Switch Component */
+.toggle-bg {
+  position: relative;
+  width: 60px;
+  height: 32px;
+  background-color: #d1d5db; /* Tailwind gray-300 */
+  border-radius: 9999px;
+  transition: background-color 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+input:checked + .toggle-bg {
+  background-color: #22c55e; /* Tailwind green-500 */
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: 24px;
+  width: 24px;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+input:checked + .toggle-bg .toggle-slider {
+  transform: translateX(28px);
+}

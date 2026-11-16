@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="UniFi Dashboard">
+  <link rel="apple-touch-icon" href="/static/icon.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}UniFi Internet Access Control{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="/static/style.css">
+  {% block head %}{% endblock %}
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow p-6 text-center">
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800">
+      {% block header_title %}UniFi Internet Access Dashboard{% endblock %}
+    </h1>
+    <p class="text-gray-500 mt-1 text-sm sm:text-base">
+      {% block header_subtitle %}Monitor and manage UniFi firewall rules with ease{% endblock %}
+    </p>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto px-4 sm:px-6 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-400 py-4 text-sm border-t bg-white">
+    UniFi Internet Controller Panel
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/static/toggle.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
