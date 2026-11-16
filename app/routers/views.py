@@ -38,14 +38,17 @@ def home(request: Request):
     allowed_rules = len([r for r in data_list if (r.get("action") or "").upper() == "ALLOW"])
     blocked_rules = total_rules - allowed_rules
 
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "traffic_rules": data_list,
-        "total_rules": total_rules,
-        "allowed_rules": allowed_rules,
-        "blocked_rules": blocked_rules,
-        "user": get_current_user(),
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={
+            "traffic_rules": data_list,
+            "total_rules": total_rules,
+            "allowed_rules": allowed_rules,
+            "blocked_rules": blocked_rules,
+            "user": get_current_user(),
+        },
+    )
 
 
 @router.get("/rule/{rule_id}", response_class=HTMLResponse)
@@ -66,7 +69,10 @@ def rule_detail(request: Request, rule_id: str):
     rule_copy = dict(rule)
     rule_copy["target_devices"] = resolve_rule_devices(rule_copy)
 
-    return templates.TemplateResponse("rule_detail.html", {
-        "request": request,
-        "rule": rule_copy,
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="rule_detail.html",
+        context={
+            "rule": rule_copy,
+        },
+    )
