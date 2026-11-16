@@ -1,5 +1,20 @@
-logs/
+# Environment variables and secrets
 .env
-AGENTS.MD
-.gitignore
+.env.*
+
+# Logs
+logs/
+
+# Project instructions
+AGENTS.md
+
+# Docker
 .dockerignore
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
