@@ -1,0 +1,16 @@
+services:
+  unifi-firewall-toggle:
+    build: .
+    image: unifi-firewall-toggle:latest
+    container_name: unifi-firewall-toggle
+    restart: unless-stopped
+    ports:
+      # Host:Container port mapping
+      # Use "8000:8000" to keep port 8000
+      # Change to "80:8000" if you want to access directly at http://<pi-ip> without specifying a port
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Persist logs on the Raspberry Pi host
+      - ./logs:/app/logs

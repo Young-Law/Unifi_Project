@@ -58,7 +58,9 @@ Unifi_Project/
 │       ├── index.html       # Dashboard with statistics & rule table
 │       └── rule_detail.html # Rule detail view & connected devices list
 ├── logs/                    # Rotating application log files
-├── dockerfile               # Container deployment configuration
+├── Dockerfile               # Production container image definition
+├── .dockerignore            # Excludes sensitive files (.env, pycache, etc.)
+├── docker-compose.yml       # Raspberry Pi container deployment configuration
 └── .env                     # Environment variables (credentials & host)
 ```
 
@@ -113,9 +115,28 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 ---
 
-## 🐳 Docker Deployment
+## 🐳 Docker & Raspberry Pi Deployment
 
-The application includes a `dockerfile` for containerized environments:
+The project includes a `Dockerfile`, `.dockerignore`, and `docker-compose.yml` optimized for containerized deployment (e.g. Raspberry Pi 5).
+
+### 1. Deploy on Raspberry Pi with Docker Compose (Recommended)
+Copy the project folder to your Raspberry Pi, create your `.env` file on the Pi, and run:
+
+```bash
+# Build and start container in the background
+docker compose up -d --build
+
+# View live application logs
+docker compose logs -f
+
+# Stop container
+docker compose down
+```
+
+Docker will automatically build the image natively for the Raspberry Pi's 64-bit ARM architecture (`linux/arm64`).
+
+### 2. Manual Docker Build & Run
+Alternatively, you can build and run using standard Docker CLI:
 
 ```bash
 # Build the Docker image
@@ -123,8 +144,10 @@ docker build -t unifi-firewall-toggle .
 
 # Run the container
 docker run -d \
-  --name unifi-toggle \
+  --name unifi-firewall-toggle \
+  --restart unless-stopped \
   -p 8000:8000 \
+  -v $(pwd)/logs:/app/logs \
   --env-file .env \
   unifi-firewall-toggle
 ```

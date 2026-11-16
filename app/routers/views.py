@@ -1,7 +1,7 @@
 # app/routers/views.py
 import logging
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 
 from app.services.unifi_auth import ensure_logged_in, get_current_user
@@ -15,6 +15,12 @@ logger = logging.getLogger("views")
 
 router = APIRouter(tags=["Views"])
 templates = Jinja2Templates(directory="app/templates")
+
+
+@router.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    """Serve the tab/address bar favicon directly."""
+    return FileResponse("app/static/icon.png")
 
 
 @router.get("/", response_class=HTMLResponse)

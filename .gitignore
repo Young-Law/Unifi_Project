@@ -1,3 +1,5 @@
-logs/app.log
+logs/
 .env
 AGENTS.MD
+.gitignore
+.dockerignore

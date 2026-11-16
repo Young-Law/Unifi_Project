@@ -257,3 +257,72 @@
 2026-11-16 14:06:37,080 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
 2026-11-16 14:06:37,327 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
 2026-11-16 14:06:37,634 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 14:25:20,154 [INFO] views - Home page accessed
+2026-11-16 14:25:20,947 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:21,210 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:21,928 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 14:25:51,068 [INFO] views - Rule detail requested - c243b26b-f21f-4244-89e0-a6c5209bcc85
+2026-11-16 14:25:51,316 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:51,559 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:51,871 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 14:25:52,119 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:52,515 [INFO] unifi_service - Fetched active clients
+2026-11-16 14:25:52,766 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:53,049 [INFO] unifi_service - Fetched history clients
+2026-11-16 14:25:53,064 [INFO] unifi_service - Active clients: 41, History clients: 102
+2026-11-16 14:25:53,066 [INFO] unifi_service - MAC name map built - 137 entries
+2026-11-16 14:25:53,067 [INFO] unifi_service - Loaded MAC name map with 137 clients for rule device resolution
+2026-11-16 14:25:56,532 [INFO] views - Home page accessed
+2026-11-16 14:25:56,773 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:57,013 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:57,303 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 14:25:58,913 [INFO] views - Rule detail requested - 79cd1f09-e707-4e1f-9f6e-b35453c02d78
+2026-11-16 14:25:59,162 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:59,404 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:25:59,693 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 14:25:59,935 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:26:00,208 [INFO] unifi_service - Fetched active clients
+2026-11-16 14:26:00,452 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:26:00,744 [INFO] unifi_service - Fetched history clients
+2026-11-16 14:26:00,744 [INFO] unifi_service - Active clients: 41, History clients: 102
+2026-11-16 14:26:00,744 [INFO] unifi_service - MAC name map built - 137 entries
+2026-11-16 14:26:00,753 [INFO] unifi_service - Loaded MAC name map with 137 clients for rule device resolution
+2026-11-16 14:26:31,660 [INFO] views - Home page accessed
+2026-11-16 14:26:31,902 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:26:32,143 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:26:32,449 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 14:35:07,254 [INFO] views - Rule detail requested - c243b26b-f21f-4244-89e0-a6c5209bcc85
+2026-11-16 14:35:08,060 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:35:08,293 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:35:09,074 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 14:35:09,315 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:35:09,603 [INFO] unifi_service - Fetched active clients
+2026-11-16 14:35:09,847 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:35:10,167 [INFO] unifi_service - Fetched history clients
+2026-11-16 14:35:10,170 [INFO] unifi_service - Active clients: 41, History clients: 102
+2026-11-16 14:35:10,171 [INFO] unifi_service - MAC name map built - 137 entries
+2026-11-16 14:35:10,171 [INFO] unifi_service - Loaded MAC name map with 137 clients for rule device resolution
+2026-11-16 14:52:13,064 [INFO] views - Home page accessed
+2026-11-16 14:52:13,895 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:52:14,133 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 14:52:15,017 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 18:02:43,689 [INFO] main - Initializing UniFi Firewall Control App
+2026-11-16 18:02:51,549 [INFO] main - Initializing UniFi Firewall Control App
+2026-11-16 18:03:24,368 [INFO] main - Initializing UniFi Firewall Control App
+2026-11-16 18:03:24,463 [INFO] httpx - HTTP Request: GET http://testserver/favicon.ico "HTTP/1.1 200 OK"
+2026-11-16 18:03:24,471 [INFO] views - Home page accessed
+2026-11-16 18:03:24,471 [INFO] unifi_auth - [login] Attempting UniFi login to https://192.168.10.1/api/auth/login
+2026-11-16 18:03:25,408 [INFO] unifi_auth - [login] POST response code: 200
+2026-11-16 18:03:25,661 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 18:03:25,661 [INFO] unifi_auth - [login] UniFi login success
+2026-11-16 18:03:25,910 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 18:03:26,757 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 18:03:26,759 [INFO] httpx - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-11-16 18:04:14,470 [INFO] views - Home page accessed
+2026-11-16 18:04:14,470 [INFO] unifi_auth - [login] Attempting UniFi login to https://192.168.10.1/api/auth/login
+2026-11-16 18:04:15,385 [INFO] unifi_auth - [login] POST response code: 200
+2026-11-16 18:04:15,632 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 18:04:15,633 [INFO] unifi_auth - [login] UniFi login success
+2026-11-16 18:04:15,879 [INFO] unifi_auth - WHOAMI probe success, user: eoyoung+unifi@gmail.com
+2026-11-16 18:04:16,187 [INFO] unifi_service - Fetched and grouped 4 firewall rules successfully
+2026-11-16 18:04:18,734 [INFO] main - Initializing UniFi Firewall Control App
